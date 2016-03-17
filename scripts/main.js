@@ -10,45 +10,37 @@ console.log(aceOfSpades);
 // Six-sided Die Constructor
 
 function SixSidedDie () {
-	this.faceNumber = Math.floor(Math.random()*6 + 1);
+	this.faceNumber = Math.floor(Math.random()*6) + 1;
 	this.rollDie = function() {
-		var newNumber = Math.floor(Math.random()*6 + 1);
-		return newNumber;
-		//console.log(newNumber);
-	}
+		this.faceNumber = Math.floor(Math.random()*6) + 1;
+		return this.faceNumber;
+		//console.log(this.faceNumber);
+	};
 }
-
-// var sumDie = {};
-
-// var firstDie = die1.rollDie(6);
-// var secondDie = die2.rollDie(6);
 
 function getProbabilities() {
+	//Make 2 dice.
 	var die1 = new SixSidedDie();
 	var	die2 = new SixSidedDie();
+	//Rolls 2 dice 1000 times each.
+	var possibleSums = {};
 	for (var i = 0; i < 1000; i++) {
-		
-		var possibleSums = [2,3,4,5,6,7,8,9,10,11,12];
 		var nthRole1= die1.rollDie();
 		var nthRole2= die2.rollDie();
-		var rolls = [nthRole1 + nthRole2];
-	
-		for (var j=0; j < rolls.length; j++) {
-		
-		var sum = possibleSums[j];
-			
-			if(sum in rolls) {
-				rolls[sum]++;
-			} else {
-				rolls[sum] = 1;
-			}
-			return rolls;
+		//Add the sum of EACH roll together.
+		var rolls = (nthRole1 + nthRole2);
+		//Keeps track of the sum occurences.
+		if(rolls in possibleSums) {
+			possibleSums[rolls]++;
+		} else {
+			possibleSums[rolls] = 1;
 		}
-	}
-	
+	}	
+	//Returns a list of the occurences.
+	return possibleSums;
 }
 
-console.log(getProbabilities());
-
+var result = getProbabilities();
+console.log(result);
 
 
